@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kevin James Woodworth | Portfolio</title>
 
 <!-- Fonts -->
@@ -10,10 +10,6 @@
 
 <style>
 /* ---------- GLOBAL ---------- */
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   font-family: 'Roboto Flex', sans-serif;
@@ -21,78 +17,19 @@ body {
   color: #111;
 }
 
-/* ---------- NAV BAR ---------- */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #111;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  z-index: 1000;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  text-decoration: none;
-  font-weight: 500;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ---------- HAMBURGER ---------- */
-.hamburger {
-  font-size: 26px;
-  cursor: pointer;
-  color: #FFD700;
-  display: none;
-}
-
-/* ---------- SIDE MENU ---------- */
-.side-menu {
-  position: fixed;
-  top: 0;
-  right: -260px;
-  width: 260px;
-  height: 100%;
-  background: #111;
-  padding: 80px 20px;
-  transition: right 0.3s ease;
-  z-index: 2000;
-}
-
-.side-menu a {
-  display: block;
-  margin-bottom: 25px;
-  font-size: 18px;
-  text-decoration: none;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.side-menu.open {
-  right: 0;
+html {
+  scroll-behavior: smooth;
 }
 
 /* ---------- HEADER ---------- */
 header {
-  padding: 140px 20px 100px;
   background: #111;
+  padding: 110px 20px 60px;
   text-align: center;
+  position: relative;
 }
 
+/* Name */
 header h1 {
   font-family: 'Playfair Display', serif;
   font-size: 46px;
@@ -103,6 +40,7 @@ header h1 {
   -webkit-text-fill-color: transparent;
 }
 
+/* Subtitle */
 header p {
   margin-top: 10px;
   font-size: 18px;
@@ -117,8 +55,64 @@ header p::after {
   display: block;
   width: 90px;
   height: 2px;
-  margin: 12px auto 0;
+  margin: 12px auto 25px;
   background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
+}
+
+/* ---------- CENTER NAV ---------- */
+.header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- HAMBURGER ---------- */
+.hamburger {
+  position: absolute;
+  left: 25px;
+  top: 30px;
+  font-size: 28px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 3000;
+}
+
+/* ---------- SIDE MENU ---------- */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background: #111;
+  padding: 100px 30px;
+  transition: left 0.3s ease;
+  z-index: 2500;
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+.side-menu a {
+  display: block;
+  margin-bottom: 28px;
+  font-size: 18px;
+  text-decoration: none;
+  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ---------- SECTIONS ---------- */
@@ -134,40 +128,23 @@ section h2 {
   margin-bottom: 20px;
 }
 
+/* White content box */
 .section-box {
-  background: #fff;
-  padding: 30px;
+  background: #ffffff;
+  height: 260px; /* placeholder height */
   border-radius: 6px;
-  margin-bottom: 20px;
 }
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-  nav ul {
+  .header-nav {
     display: none;
-  }
-
-  .hamburger {
-    display: block;
   }
 }
 </style>
 </head>
 
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#media">Media</a></li>
-    <li><a href="#wo">WO</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
 
 <!-- SIDE MENU -->
 <div class="side-menu" id="sideMenu">
@@ -181,65 +158,48 @@ section h2 {
 
 <!-- HEADER -->
 <header id="home">
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
   <h1>Kevin James Woodworth</h1>
   <p>Professional Online Portfolio</p>
+
+  <nav class="header-nav">
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#media">Media</a>
+    <a href="#wo">WO</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
 <!-- ABOUT -->
 <section id="about">
   <h2>About</h2>
-  <div class="section-box">
-    <p>Bio goes here.</p>
-    <p>Headshot area.</p>
-    <p>Photos, hobbies, events, achievements, and past experiences.</p>
-  </div>
+  <div class="section-box"></div>
 </section>
 
 <!-- PORTFOLIO -->
 <section id="portfolio">
   <h2>Portfolio</h2>
-  <div class="section-box">
-    <ul>
-      <li>Download CV</li>
-      <li>Public Relations / Agency Work</li>
-      <li>Media Relations</li>
-      <li>Writing</li>
-      <li>Woodworth Outdoors</li>
-    </ul>
-  </div>
+  <div class="section-box"></div>
 </section>
 
 <!-- MEDIA -->
 <section id="media">
   <h2>Media</h2>
-  <div class="section-box">
-    <ul>
-      <li>Recreational Projects</li>
-      <li>Professional Projects</li>
-    </ul>
-  </div>
+  <div class="section-box"></div>
 </section>
 
 <!-- WO -->
 <section id="wo">
   <h2>WO</h2>
-  <div class="section-box">
-    <ul>
-      <li>Role at WO</li>
-      <li>Management, Marketing, Content</li>
-      <li>Link to Future WO Website</li>
-    </ul>
-  </div>
+  <div class="section-box"></div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
   <h2>Contact</h2>
-  <div class="section-box">
-    <p>Email</p>
-    <p>LinkedIn</p>
-    <p>Cell Number</p>
-  </div>
+  <div class="section-box"></div>
 </section>
 
 <script>
@@ -250,6 +210,8 @@ function toggleMenu() {
 
 </body>
 </html>
+
+
 
 
 
