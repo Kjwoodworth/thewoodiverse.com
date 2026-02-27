@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Kevin James Woodworth</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  background: #0a0a0a;
+  color: #f0ece0;
+  min-height: 100vh;
+}
+
+html { scroll-behavior: smooth; }
+
+/* ---------- GRAIN ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ---------- SIDE MENU ---------- */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 280px;
+  height: 100%;
+  background: #0d0d0d;
+  border-right: 1px solid rgba(212,175,55,0.15);
+  padding: 90px 36px;
+  transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2500;
+}
+
+.side-menu.open { left: 0; }
+
+.side-menu a {
+  display: block;
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #6b5e3a;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.side-menu a:hover { color: #FFD700; }
+
+/* ---------- TOP NAV BAR ---------- */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid rgba(212,175,55,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 2000;
+  backdrop-filter: blur(8px);
+}
+
+.topbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 400;
+  background: linear-gradient(90deg, #FFD700, #E1C699);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.topbar-nav a {
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #6b5e3a;
+  transition: color 0.2s;
+}
+
+.topbar-nav a:hover,
+.topbar-nav a.active { color: #FFD700; }
+
+.hamburger {
+  font-size: 20px;
+  cursor: pointer;
+  color: #8a7a50;
+  background: none;
+  border: none;
+  z-index: 3000;
+  transition: color 0.2s;
+}
+
+.hamburger:hover { color: #FFD700; }
+
+/* ---------- PAGE LAYOUT ---------- */
+.page-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 120px 40px 80px;
+}
+
+/* ---------- PAGE HEADER ---------- */
+.page-header {
+  margin-bottom: 70px;
+  position: relative;
+}
+
+.page-header-eyebrow {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #6b5e3a;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 400;
+  margin: 0;
+  background: linear-gradient(135deg, #FFD700 0%, #E1C699 50%, #c9a84c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.page-header-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, transparent);
+  margin-top: 24px;
+}
+
+/* ---------- BIO SECTION ---------- */
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 60px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+/* Photo area */
+.bio-photo-wrap {
+  position: sticky;
+  top: 100px;
+}
+
+.bio-photo-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-width: 340px;
+}
+
+.bio-photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: -8px -8px auto auto;
+  width: 60%;
+  height: 60%;
+  border-top: 1px solid rgba(212,175,55,0.4);
+  border-right: 1px solid rgba(212,175,55,0.4);
+}
+
+.bio-photo-frame::after {
+  content: "";
+  position: absolute;
+  inset: auto auto -8px -8px;
+  width: 60%;
+  height: 60%;
+  border-bottom: 1px solid rgba(212,175,55,0.4);
+  border-left: 1px solid rgba(212,175,55,0.4);
+}
+
+.bio-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(20%) contrast(1.05);
+}
+
+.bio-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #141414 100%);
+  border: 1px solid rgba(212,175,55,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #4a4030;
+}
+
+.bio-photo-placeholder span {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.bio-photo-caption {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #4a4030;
+  font-weight: 500;
+}
+
+/* Bio text */
+.bio-text p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #c8c0a8;
+  margin: 0 0 22px;
+  font-weight: 300;
+}
+
+.bio-text p:first-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #e8dfc8;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.bio-text strong {
+  color: #E1C699;
+  font-weight: 500;
+}
+
+/* ---------- DIVIDER ---------- */
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(212,175,55,0.12);
+  margin: 60px 0;
+}
+
+/* ---------- TIMELINE ---------- */
+.timeline-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #6b5e3a;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(212,175,55,0.4), rgba(212,175,55,0.05));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 44px;
+  opacity: 0;
+  transform: translateX(-12px);
+  animation: slideIn 0.5s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -36px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,215,0,0.3);
+}
+
+.timeline-date {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8a7a50;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.timeline-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #f0ece0;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.timeline-subtitle {
+  font-size: 13px;
+  color: #8a7a50;
+  margin-bottom: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.timeline-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #8a8070;
+  font-weight: 300;
+}
+
+/* ---------- SKILLS STRIP ---------- */
+.skills-section {
+  margin-top: 60px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.skill-tag {
+  border: 1px solid rgba(212,175,55,0.2);
+  padding: 12px 18px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8a7a50;
+  font-weight: 600;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.skill-tag:hover {
+  border-color: rgba(212,175,55,0.5);
+  color: #FFD700;
+  background: rgba(212,175,55,0.04);
+}
+
+
+/* ---------- INLINE PHOTOS ---------- */
+.inline-photo {
+  margin: 28px 0;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.inline-photo img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(15%) contrast(1.05);
+  transition: filter 0.4s ease;
+}
+
+.inline-photo:hover img { filter: grayscale(0%) contrast(1.0); }
+
+.inline-photo-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.pair-item { position: relative; overflow: hidden; }
+
+.pair-item img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(15%) contrast(1.05);
+  transition: filter 0.4s ease;
+}
+
+.pair-item:hover img { filter: grayscale(0%) contrast(1.0); }
+
+.inline-photo-caption {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #4a4030;
+  font-weight: 500;
+  margin: 8px 0 0;
+  font-family: "Raleway", sans-serif;
+}
+
+@media (max-width: 600px) {
+  .inline-photo-pair { grid-template-columns: 1fr; }
+  .pair-item img { height: 200px; }
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 768px) {
+  .topbar-nav { display: none; }
+  .page-wrap { padding: 100px 24px 60px; }
+  .bio-grid { grid-template-columns: 1fr; gap: 40px; }
+  .bio-photo-wrap { position: static; }
+  .bio-photo-frame { max-width: 260px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="sideMenu">
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="about.html" onclick="toggleMenu()">About</a>
+  <a href="portfolio.html" onclick="toggleMenu()">Portfolio</a>
+  <a href="media.html" onclick="toggleMenu()">Media</a>
+  <a href="wo.html" onclick="toggleMenu()">WO</a>
+  <a href="contact.html" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <a href="index.html" class="topbar-logo">KJW</a>
+  <div class="topbar-nav">
+    <a href="about.html" class="active">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="media.html">Media</a>
+    <a href="wo.html">WO</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="page-wrap">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <p class="page-header-eyebrow">Get to know me</p>
+    <h1>About</h1>
+    <div class="page-header-line"></div>
+  </div>
+
+  <!-- Bio Grid -->
+  <div class="bio-grid">
+
+    <!-- Photo -->
+    <div class="bio-photo-wrap">
+      <div class="bio-photo-frame">
+        <img src="images/IMG_6355.JPG" alt="Kevin James Woodworth">
+      </div>
+      <p class="bio-photo-caption">Kevin James Woodworth</p>
+    </div>
+
+    <!-- Text -->
+    <div class="bio-text">
+      <p>Welcome to The Woodiverse!</p>
+
+      <p>My name is <strong>Kevin James Woodworth</strong>, and this site serves as a professional online portfolio — a comprehensive look into my professional journey, creative work, and personal interests.</p>
+
+      <p>I like to describe myself as an <strong>outgoing, open-minded, and driven communications professional</strong> with a strong passion for media relations and strategic storytelling. I thrive in fast-paced environments where ideas can be developed, refined, and brought to life. From an early age, I found fulfillment in transforming my visions into reality, whether through media production, writing, or collaborative creative work.</p>
+
+      <p>My passion for media began in high school, where I immersed myself in broadcast production and studio operations. I gained hands-on experience managing production schedules, operating and managing the control room, coordinating camera sequences, and contributing both behind and in front of the camera during live news broadcasts. Through academic media projects, I further developed skills in directing, producing, scriptwriting, editing, and on-screen performance. These experiences shaped my versatility in media relations and broadened my horizons to the endless possibilities in such a thrilling and thriving industry.</p>
+
+      <p>That foundation carried into my college career at <strong>Kean University</strong>, where I earned a Bachelor's degree in Communication Studies in 2023. My coursework and project work spanned mass media, broadcasting, scriptwriting, video editing, journalism, digital production, sports communications, business communications, and public relations. During this time, I solidified my commitment to building an encompassing career within the media relations industry.</p>
+
+      <p>Following graduation, I began my professional career as a <strong>freelance writer</strong>, producing timely, meaningful content focused on current news and public-interest topics.</p>
+
+      <p>In early 2025, I joined <strong>CMI Media Group</strong> within the Public Relations & Growth department. What began as an internship quickly evolved into a full-time position as <strong>Associate, Public Relations & Corporate Communications</strong>. In this role, I supported the development of press materials and thought leadership content, managed the company's social media presence and content, analyzed and reported quarterly engagement data, and researched and submitted prominent healthcare media advertising awards to enhance executive visibility and brand recognition. My contributions helped secure many significant industry recognitions across respected industry programs.</p>
+
+      <div class="inline-photo">
+        <img src="images/IMG_3180.PNG" alt="Kevin on a jet ski">
+        <p class="inline-photo-caption">Living life at full speed</p>
+      </div>
+
+      <p>Outside of my professional work, I value time spent with family and friends, riding my horse <strong>Jesse</strong>, working on home improvement projects, exploring new music, fishing, and creating digital content.</p>
+
+      <div class="inline-photo-pair">
+        <div class="pair-item">
+          <img src="images/IMG_3172.jpg" alt="Jesse the horse">
+          <p class="inline-photo-caption">Jesse</p>
+        </div>
+        <div class="pair-item">
+          <img src="images/IMG_2594.jpg" alt="Kevin in the mountains">
+          <p class="inline-photo-caption">Exploring the outdoors</p>
+        </div>
+      </div>
+
+      <p>Thank you for taking the time to explore my portfolio. I hope this site provides insight into both the professional skillset and personal drive that define who I am. I welcome new connections, collaborations, and opportunities — please feel free to reach out through the <a href="contact.html" style="color:#E1C699; text-decoration:none; border-bottom: 1px solid rgba(212,175,55,0.3);">contact section</a>.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Timeline -->
+  <p class="timeline-label">Experience &amp; Education</p>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-date">2025 – Present</p>
+      <h3 class="timeline-title">CMI Media Group</h3>
+      <p class="timeline-subtitle">Associate, Public Relations & Corporate Communications</p>
+      <p class="timeline-desc">Developed press materials and thought leadership content, managed corporate social media, analyzed quarterly engagement data, and submitted award nominations resulting in multiple industry recognitions including CEO of the Year at the PM360 ELITE Trailblazers Awards (2025).</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-date">2023 – 2025</p>
+      <h3 class="timeline-title">Freelance Writer</h3>
+      <p class="timeline-subtitle">Independent</p>
+      <p class="timeline-desc">Produced timely, meaningful content focused on current news and public-interest topics across various platforms.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-date">2019 – 2023</p>
+      <h3 class="timeline-title">Kean University</h3>
+      <p class="timeline-subtitle">Bachelor of Arts, Communication Studies</p>
+      <p class="timeline-desc">Coursework spanning mass media, broadcasting, scriptwriting, video editing, journalism, digital production, sports communications, business communications, and public relations.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-date">Pre-2019</p>
+      <h3 class="timeline-title">Broadcast & Media Production</h3>
+      <p class="timeline-subtitle">High School — Foundation Years</p>
+      <p class="timeline-desc">Hands-on experience in broadcast production, studio operations, control room management, live news broadcasts, directing, producing, scriptwriting, and on-screen performance.</p>
+    </div>
+
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Skills -->
+  <div class="skills-section">
+    <p class="timeline-label">Core Skills</p>
+    <div class="skills-grid">
+      <div class="skill-tag">Media Relations</div>
+      <div class="skill-tag">Public Relations</div>
+      <div class="skill-tag">Strategic Storytelling</div>
+      <div class="skill-tag">Press Materials</div>
+      <div class="skill-tag">Social Media</div>
+      <div class="skill-tag">Content Creation</div>
+      <div class="skill-tag">Broadcast Production</div>
+      <div class="skill-tag">Scriptwriting</div>
+      <div class="skill-tag">Video Editing</div>
+      <div class="skill-tag">Digital Production</div>
+      <div class="skill-tag">Journalism</div>
+      <div class="skill-tag">Analytics & Reporting</div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("open");
+}
+
+// Fade in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.style.opacity = '1';
+  });
+}, { threshold: 0.1 });
+</script>
+
+</body>
+</html>
