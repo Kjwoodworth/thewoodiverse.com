@@ -5,218 +5,225 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kevin James Woodworth | Portfolio</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Roboto+Flex:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ---------- GLOBAL ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: 'Roboto Flex', sans-serif;
-  background: #f5f5f5;
-  color: #111;
+  font-family: 'Raleway', sans-serif;
+  background: #0a0a0a;
+  color: #f0ece0;
+  min-height: 100vh;
 }
 
-html {
-  scroll-behavior: smooth;
+html { scroll-behavior: smooth; }
+
+/* ---------- GRAIN OVERLAY ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
 }
 
-/* ---------- HEADER ---------- */
+/* ---------- HEADER / HERO ---------- */
 header {
-  background: #111;
-  padding: 110px 20px 60px;
+  background: #0a0a0a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   position: relative;
+  padding: 60px 20px;
+  overflow: hidden;
 }
 
-/* Name */
+header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,175,55,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(212,175,55,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #8a7a50;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
 header h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 46px;
+  font-size: clamp(38px, 6vw, 72px);
   font-weight: 400;
-  margin: 0;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #FFD700 0%, #E1C699 40%, #F5C518 70%, #c9a84c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -1px;
 }
 
-/* Subtitle */
-header p {
-  margin-top: 10px;
-  font-size: 18px;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero-subtitle {
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #6b5e3a;
+  margin: 16px 0 60px;
+  font-weight: 400;
 }
 
-header p::after {
-  content: "";
-  display: block;
-  width: 90px;
-  height: 2px;
-  margin: 12px auto 25px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-}
-
-/* ---------- CENTER NAV ---------- */
+/* ---------- HERO NAV ---------- */
 .header-nav {
   display: flex;
-  justify-content: center;
-  gap: 40px;
+  gap: 0;
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .header-nav a {
   text-decoration: none;
-  font-weight: 500;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8a7a50;
+  padding: 14px 24px;
+  border-right: 1px solid rgba(212,175,55,0.15);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.header-nav a:last-child { border-right: none; }
+
+.header-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, #E1C699);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.header-nav a:hover {
+  color: #FFD700;
+  background: rgba(212,175,55,0.05);
+}
+
+.header-nav a:hover::after { transform: scaleX(1); }
+
+/* ---------- DECORATIVE LINE ---------- */
+.hero-line {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(212,175,55,0.4), transparent);
+  margin: 50px auto 0;
 }
 
 /* ---------- HAMBURGER ---------- */
 .hamburger {
   position: absolute;
-  left: 25px;
-  top: 30px;
-  font-size: 28px;
+  left: 28px;
+  top: 28px;
+  font-size: 22px;
   cursor: pointer;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #8a7a50;
   z-index: 3000;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  padding: 4px;
 }
+
+.hamburger:hover { color: #FFD700; }
 
 /* ---------- SIDE MENU ---------- */
 .side-menu {
   position: fixed;
   top: 0;
-  left: -300px;
-  width: 300px;
+  left: -320px;
+  width: 280px;
   height: 100%;
-  background: #111;
-  padding: 100px 30px;
-  transition: left 0.3s ease;
+  background: #0d0d0d;
+  border-right: 1px solid rgba(212,175,55,0.15);
+  padding: 90px 36px;
+  transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
   z-index: 2500;
 }
 
-.side-menu.open {
-  left: 0;
-}
+.side-menu.open { left: 0; }
 
 .side-menu a {
   display: block;
-  margin-bottom: 28px;
-  font-size: 18px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
   text-decoration: none;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #6b5e3a;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
-/* ---------- SECTIONS ---------- */
-section {
-  max-width: 900px;
-  margin: auto;
-  padding: 80px 20px;
-}
-
-section h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-
-/* White content box */
-.section-box {
-  background: #ffffff;
-  height: 260px; /* placeholder height */
-  border-radius: 6px;
-}
+.side-menu a:hover { color: #FFD700; }
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-  .header-nav {
-    display: none;
-  }
+  .header-nav { display: none; }
 }
 </style>
 </head>
-
 <body>
 
 <!-- SIDE MENU -->
 <div class="side-menu" id="sideMenu">
-  <a href="#home" onclick="toggleMenu()">Home</a>
-  <a href="#about" onclick="toggleMenu()">About</a>
-  <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
-  <a href="#media" onclick="toggleMenu()">Media</a>
-  <a href="#wo" onclick="toggleMenu()">WO</a>
-  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="about.html" onclick="toggleMenu()">About</a>
+  <a href="portfolio.html" onclick="toggleMenu()">Portfolio</a>
+  <a href="media.html" onclick="toggleMenu()">Media</a>
+  <a href="wo.html" onclick="toggleMenu()">WO</a>
+  <a href="contact.html" onclick="toggleMenu()">Contact</a>
 </div>
 
-<!-- HEADER -->
+<!-- HEADER / HERO -->
 <header id="home">
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
 
+  <p class="hero-eyebrow">Professional Online Portfolio</p>
   <h1>Kevin James Woodworth</h1>
-  <p>Professional Online Portfolio</p>
+  <p class="hero-subtitle">Communications & Media Relations Professional</p>
 
   <nav class="header-nav">
-    <a href="#about">About</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#media">Media</a>
-    <a href="#wo">WO</a>
-    <a href="#contact">Contact</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="media.html">Media</a>
+    <a href="wo.html">WO</a>
+    <a href="contact.html">Contact</a>
   </nav>
+
+  <div class="hero-line"></div>
 </header>
-
-<!-- ABOUT -->
-<section id="about">
-  <h2>About</h2>
-  <div class="section-box"></div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <h2>Portfolio</h2>
-  <div class="section-box"></div>
-</section>
-
-<!-- MEDIA -->
-<section id="media">
-  <h2>Media</h2>
-  <div class="section-box"></div>
-</section>
-
-<!-- WO -->
-<section id="wo">
-  <h2>WO</h2>
-  <div class="section-box"></div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact</h2>
-  <div class="section-box"></div>
-</section>
 
 <script>
 function toggleMenu() {
   document.getElementById("sideMenu").classList.toggle("open");
 }
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
