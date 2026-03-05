@@ -4,107 +4,683 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio | Kevin James Woodworth</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Roboto+Flex:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ---------- GLOBAL ---------- */
-body {
-  margin: 0;
-  font-family: 'Roboto Flex', sans-serif;
-  background: #f5f5f5;
-  color: #111;
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: 'Raleway', sans-serif; background: #0a0a0a; color: #f0ece0; min-height: 100vh; }
+html { scroll-behavior: smooth; }
+body::before { content: ""; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
+.side-menu { position: fixed; top: 0; left: -320px; width: 280px; height: 100%; background: #0d0d0d; border-right: 1px solid rgba(212,175,55,0.15); padding: 90px 36px; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); z-index: 2500; }
+.side-menu.open { left: 0; }
+.side-menu a { display: block; margin-bottom: 24px; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; text-decoration: none; color: #6b5e3a; font-weight: 600; transition: color 0.2s; }
+.side-menu a:hover { color: #FFD700; }
+.topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; background: rgba(10,10,10,0.95); border-bottom: 1px solid rgba(212,175,55,0.12); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; z-index: 2000; backdrop-filter: blur(8px); }
+.topbar-logo { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 400; background: linear-gradient(90deg, #FFD700, #E1C699); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+.topbar-nav { display: flex; gap: 32px; }
+.topbar-nav a { text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #6b5e3a; transition: color 0.2s; }
+.topbar-nav a:hover, .topbar-nav a.active { color: #FFD700; }
+.hamburger { font-size: 20px; cursor: pointer; color: #8a7a50; background: none; border: none; z-index: 3000; transition: color 0.2s; }
+.hamburger:hover { color: #FFD700; }
+.page-wrap { max-width: 1100px; margin: 0 auto; padding: 120px 40px 100px; }
+.page-header { margin-bottom: 80px; }
+.page-header-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: #6b5e3a; margin-bottom: 16px; font-weight: 500; }
+.page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 400; margin: 0; background: linear-gradient(135deg, #FFD700 0%, #E1C699 50%, #c9a84c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+.page-header-line { width: 60px; height: 2px; background: linear-gradient(90deg, #FFD700, transparent); margin-top: 24px; }
+.page-header-sub { font-size: 14px; color: #6b5e3a; margin-top: 16px; font-weight: 300; letter-spacing: 1px; max-width: 600px; line-height: 1.9; }
+.project { margin-bottom: 100px; padding-bottom: 100px; border-bottom: 1px solid rgba(212,175,55,0.1); }
+.project:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.project-header { display: flex; align-items: flex-start; gap: 28px; margin-bottom: 40px; }
+.project-number { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 400; color: rgba(212,175,55,0.12); line-height: 1; flex-shrink: 0; margin-top: -8px; }
+.project-meta { flex: 1; }
+.project-category { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #6b5e3a; font-weight: 600; margin-bottom: 8px; }
+.project-title { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 32px); font-weight: 400; color: #f0ece0; margin: 0 0 10px; line-height: 1.2; }
+.project-subtitle { font-size: 13px; color: #8a7a50; font-weight: 400; letter-spacing: 1px; }
+.skills-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+.skill-pill { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #6b5e3a; font-weight: 600; border: 1px solid rgba(212,175,55,0.18); padding: 6px 14px; }
+.project-body { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start; }
+.project-body.reverse { grid-template-columns: 1fr 1.2fr; }
+.project-body.reverse .project-text { order: 2; }
+.project-body.reverse .project-visuals { order: 1; }
+.project-body.full { grid-template-columns: 1fr; }
+.project-text p { font-size: 14px; line-height: 1.9; color: #c8c0a8; font-weight: 300; margin: 0 0 18px; }
+.project-text strong { color: #E1C699; font-weight: 500; }
+.outcome-box { border-left: 2px solid rgba(212,175,55,0.4); padding: 16px 20px; margin-top: 24px; background: rgba(212,175,55,0.03); }
+.outcome-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #6b5e3a; font-weight: 600; margin-bottom: 8px; }
+.outcome-text { font-size: 13px; line-height: 1.8; color: #a89878; font-weight: 300; margin: 0; }
+.project-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #E1C699; text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 2px; transition: all 0.2s; }
+.project-link:hover { color: #FFD700; border-color: rgba(212,175,55,0.5); }
+.project-link svg { transition: transform 0.2s; }
+.project-link:hover svg { transform: translateX(4px); }
+.project-visuals { display: flex; flex-direction: column; gap: 12px; }
+.vis-img { width: 100%; display: block; object-fit: cover; filter: grayscale(10%) contrast(1.05); transition: filter 0.4s; }
+.vis-img:hover { filter: grayscale(0%); }
+.vis-img-tall { height: 400px; object-fit: cover; }
+.vis-img-med { height: 260px; object-fit: cover; }
+.vis-img-short { height: 180px; object-fit: cover; }
+.vis-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vis-pair img { width: 100%; height: 200px; object-fit: cover; filter: grayscale(10%) contrast(1.05); transition: filter 0.4s; display: block; }
+.vis-pair img:hover { filter: grayscale(0%); }
+.vis-caption { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #3a3220; font-weight: 500; margin-top: 4px; }
+.social-post { border: 1px solid rgba(212,175,55,0.12); background: rgba(255,255,255,0.02); overflow: hidden; }
+.social-post img { width: 100%; display: block; object-fit: cover; max-height: 260px; }
+.social-post-meta { padding: 10px 14px; font-size: 10px; color: #4a4030; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
+.awards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.award-card { border: 1px solid rgba(212,175,55,0.15); padding: 22px 18px; transition: all 0.3s; position: relative; overflow: hidden; }
+.award-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #FFD700, transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+.award-card:hover::before { transform: scaleX(1); }
+.award-card:hover { background: rgba(212,175,55,0.03); border-color: rgba(212,175,55,0.3); }
+.award-status { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
+.award-status.winner { color: #FFD700; }
+.award-status.finalist { color: #8a7a50; }
+.award-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #f0ece0; margin-bottom: 6px; font-weight: 400; line-height: 1.3; }
+.award-program { font-size: 11px; color: #6b5e3a; letter-spacing: 1px; font-weight: 500; }
+.award-year { font-size: 10px; color: #3a3220; margin-top: 8px; letter-spacing: 2px; }
+.comments { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.comment-card { border: 1px solid rgba(212,175,55,0.1); padding: 14px 16px; background: rgba(255,255,255,0.01); }
+.comment-author { font-size: 11px; font-weight: 600; color: #E1C699; letter-spacing: 1px; margin-bottom: 2px; }
+.comment-role { font-size: 10px; color: #4a4030; letter-spacing: 1px; margin-bottom: 8px; }
+.comment-text { font-size: 13px; color: #8a8070; font-weight: 300; line-height: 1.7; font-style: italic; margin: 0; }
+.research-body { max-width: 720px; }
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 36px 0; }
+.stat-box { border: 1px solid rgba(212,175,55,0.15); padding: 24px 20px; text-align: center; }
+.stat-number { font-family: 'Playfair Display', serif; font-size: 28px; color: #FFD700; margin-bottom: 6px; }
+.stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #6b5e3a; font-weight: 600; line-height: 1.5; }
+@media (max-width: 768px) {
+  .topbar-nav { display: none; }
+  .page-wrap { padding: 100px 24px 60px; }
+  .project-body, .project-body.reverse { grid-template-columns: 1fr; }
+  .project-body.reverse .project-text { order: 1; }
+  .project-body.reverse .project-visuals { order: 2; }
+  .awards-grid { grid-template-columns: 1fr; }
+  .vis-pair { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: 1fr; }
 }
 
-html {
-  scroll-behavior: smooth;
+/* LIGHTBOX */
+.lightbox-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92); z-index: 9998;
+  align-items: center; justify-content: center;
+  cursor: zoom-out;
 }
+.lightbox-overlay.active { display: flex; }
+.lightbox-overlay img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+  cursor: default;
+}
+.lightbox-close {
+  position: fixed; top: 24px; right: 32px;
+  font-size: 32px; color: #8a7a50; cursor: pointer;
+  background: none; border: none; z-index: 9999;
+  transition: color 0.2s; line-height: 1;
+}
+.lightbox-close:hover { color: #FFD700; }
+.lightbox-img { cursor: zoom-in !important; }
 
-/* ---------- HEADER ---------- */
-header {
-  background: #111;
-  padding: 120px 20px 60px;
-  text-align: center;
-  position: relative;
-}
 
-/* Name */
-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 46px;
-  font-weight: 400;
-  margin: 0;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+/* FREELANCE ARTICLE CARDS */
 
-/* Subtitle */
-header p {
-  margin-top: 10px;
-  font-size: 18px;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+.freelance-layout { display: flex; flex-direction: column; gap: 32px; }
+.freelance-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start; }
+.freelance-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
-header p::after {
-  content: "";
-  display: block;
-  width: 90px;
-  height: 2px;
-  margin: 12px auto 25px;
-  background: linear-gradient(90deg, #FFD700, #E1C699, #F5C518);
-}
-
-/* ---------- NAV ---------- */
-nav {
-  margin-top: 20px;
-}
-
-nav a {
-  color: #fff;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-nav a:hover {
-  color: #E1C699;
-}
-
-/* ---------- SECTIONS ---------- */
-section {
-  max-width: 900px;
-  margin: 3rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  height: 260px; /* placeholder height for now */
-}
+.freelance-articles-old { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+.article-card { border: 1px solid rgba(212,175,55,0.12); padding: 20px 22px; background: rgba(255,255,255,0.01); transition: border-color 0.3s; }
+.article-card:hover { border-color: rgba(212,175,55,0.3); }
+.article-tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a50; margin-bottom: 8px; font-weight: 600; }
+.article-headline { font-family: 'Playfair Display', serif; font-size: 15px; color: #f0ece0; font-weight: 400; margin: 0 0 8px; line-height: 1.4; }
+.article-email-hed { font-size: 11px; color: #6b5e3a; margin: 0 0 10px; font-style: italic; }
+.article-email-hed span { color: #8a7a50; font-style: normal; font-weight: 500; }
+.article-img { width: 100%; height: 320px; object-fit: cover; object-position: top; display: block; margin-bottom: 14px; border: 1px solid #e0e0e0; }
+.article-card-body { padding: 16px 0 0; }
+.article-enlarge-hint { font-size: 10px; color: #6b5e3a; letter-spacing: 1.5px; text-transform: uppercase; margin: 8px 0 0; }
+.article-pdf-link:hover { color: #FFD700; border-color: #FFD700; }
+.article-excerpt { font-size: 13px; color: #a89878; line-height: 1.7; margin: 0; font-weight: 300; }
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Kevin James Woodworth</h1>
-  <p>Professional Online Portfolio</p>
-  <nav>
-    <a href="index.html">About</a>
-    <a href="portfolio.html">Portfolio</a>
+<div class="side-menu" id="sideMenu">
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="about.html" onclick="toggleMenu()">About</a>
+  <a href="portfolio.html" onclick="toggleMenu()">Portfolio</a>
+  <a href="media.html" onclick="toggleMenu()">Media</a>
+  <a href="wo.html" onclick="toggleMenu()">WO</a>
+  <a href="contact.html" onclick="toggleMenu()">Contact</a>
+</div>
+
+<nav class="topbar">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <a href="index.html" class="topbar-logo">KJW</a>
+  <div class="topbar-nav">
+    <a href="about.html">About</a>
+    <a href="portfolio.html" class="active">Portfolio</a>
     <a href="media.html">Media</a>
     <a href="wo.html">WO</a>
     <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  </div>
+</nav>
 
-<section>
-  <h2>Portfolio</h2>
-  <div class="section-box"></div>
-</section>
+<div class="page-wrap">
 
+  <div class="page-header">
+    <p class="page-header-eyebrow">My Work</p>
+    <h1>Portfolio</h1>
+    <div class="page-header-line"></div>
+    <p class="page-header-sub">A curated selection of professional projects, campaigns, and strategic contributions from my time in public relations and corporate communications — demonstrating strategy, execution, and measurable impact.</p>
+  </div>
+
+  <!-- 01 BYLINE -->
+  <div class="project" id="byline">
+    <div class="project-header">
+      <div class="project-number">01</div>
+      <div class="project-meta">
+        <p class="project-category">Professional Writing & Thought Leadership</p>
+        <h2 class="project-title">The Future of Healthcare Marketing:<br>An Interview With Melanie Lysaght</h2>
+        <p class="project-subtitle">Healthcare Marketer's Exchange · June 2025 Issue · By Kevin Woodworth</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Executive Interviewing</span>
+      <span class="skill-pill">Thought Leadership Writing</span>
+      <span class="skill-pill">Industry Analysis</span>
+      <span class="skill-pill">Content Development</span>
+      <span class="skill-pill">Strategic Positioning</span>
+    </div>
+    <div class="project-body">
+      <div class="project-text">
+        <p>I conducted and authored a featured byline in the <strong>June 2025 issue of Healthcare Marketer's Exchange</strong>, interviewing CMI Media Group's Director of Innovation following her attendance at SXSW. Through a structured Q&A, we explored emerging technologies, evolving consumer behavior, future-facing healthcare marketing trends, and the skills modern healthcare marketers must develop to stay competitive.</p>
+        <p>The conversation translated <strong>on-the-ground innovation insights</strong> into actionable perspectives for industry professionals — covering AI's role in healthcare advertising, shifts in patient empowerment, podcast strategy, and the most exciting innovation she encountered: the revival of the woolly mammoth by Colossal Biosciences.</p>
+        <p>I wrote, edited, and positioned the full piece for publication — ensuring it reflected both executive credibility and the editorial quality of a nationally distributed trade publication.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">The byline positioned CMI Media Group as a forward-thinking leader in healthcare marketing innovation while extending SXSW insights to healthcare marketers, HCPs, and industry stakeholders who were unable to attend. It strengthened executive visibility and earned direct recognition from the publication's publisher on LinkedIn.</p>
+        </div>
+        <a href="https://online.flippingbook.com/view/854721250/" target="_blank" class="project-link">
+          Read the Published Byline
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="The-Exchange-June-2025-03-02-2026_06_55_PM.pdf" target="_blank" class="project-link" style="margin-top:10px;">
+          Click Here to Read My Full Byline
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="comments">
+          <div class="comment-card">
+            <p class="comment-author">Nancy Leonard</p>
+            <p class="comment-role">Publisher · Healthcare Marketer's Exchange</p>
+            <p class="comment-text">"Thanks for sharing, Kevin! We appreciate your participation. Very insightful!"</p>
+          </div>
+          <div class="comment-card">
+            <p class="comment-author">Carly Kuper</p>
+            <p class="comment-role">PR at CMI Media Group & Compas · PR News Top Women in PR</p>
+            <p class="comment-text">"So good 👏👏👏"</p>
+          </div>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="The-Exchange-June-2025-03-02-2026_06_56_PM.png" alt="Healthcare Marketer's Exchange June 2025 Cover" class="vis-img vis-img-med">
+        <p class="vis-caption">Healthcare Marketer's Exchange — June 2025 Cover</p>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="20-Facebook-03-02-2026_06_59_PM.png" alt="Facebook byline feature">
+          <p class="social-post-meta">Publication Promotion</p>
+        </div>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="27-Activity-Kevin-Woodworth-LinkedIn-03-02-2026_06_57_PM.png" alt="Nancy Leonard LinkedIn comment">
+          <p class="social-post-meta">Publisher recognition — LinkedIn</p>
+        </div>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="27-Activity-Kevin-Woodworth-LinkedIn-03-02-2026_07_09_PM.png" alt="Carly Kuper LinkedIn comment">
+          <p class="social-post-meta">Management Recognition — LinkedIn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 AGILITY -->
+  <div class="project" id="agility">
+    <div class="project-header">
+      <div class="project-number">02</div>
+      <div class="project-meta">
+        <p class="project-category">Event Strategy, Coordination & Communications</p>
+        <h2 class="project-title">Agility: Hype To Hope To Health</h2>
+        <p class="project-subtitle">CMI Media Group's Annual Flagship Event · Philadelphia, PA · September 8, 2025</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Event Strategy</span>
+      <span class="skill-pill">Executive Coordination</span>
+      <span class="skill-pill">Speaker Relations & NDAs</span>
+      <span class="skill-pill">PR Execution</span>
+      <span class="skill-pill">Social Media Coverage</span>
+      <span class="skill-pill">Brand Communications</span>
+    </div>
+    <div class="project-body reverse">
+      <div class="project-text">
+        <p>Throughout 2025, I played a central role in planning, promoting, and coordinating <strong>CMI Media Group's largest annual event</strong> — Agility: Hype To Hope To Health — a full-scale healthcare marketing conference held at the Pennsylvania Academy of the Fine Arts in Philadelphia.</p>
+        <p>My responsibilities spanned the full event lifecycle: <strong>pre-event social media promotion</strong>, managing executive speaker coordination, logistics, and compliance documentation for nationally recognized industry leaders including <strong>Mick Ebeling</strong> (Not Impossible Labs) and <strong>Daymond John</strong> (Shark Tank / FUBU), managing on-site admission and operations, and producing <strong>live and post-event social coverage</strong> including highlights and recap content.</p>
+        <p>The event focused on the future outlook of healthcare and the genuine hope that innovation holds for the industry — a theme I helped bring to life through every communications touchpoint.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Agility 2025 earned a <strong>Gold MarCom Award for Excellence in Strategic Communications</strong> under the "Special Event" category — an award I researched, drafted, and submitted alongside my team, from identifying the right program and category to crafting the winning narrative. The event strengthened client relationships, elevated brand perception, and reinforced CMI's leadership within healthcare marketing.</p>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="IMG_6143.jpeg" alt="Kevin at Agility event" class="vis-img vis-img-tall">
+        <p class="vis-caption">On-site at Agility: Hype To Hope To Health</p>
+        <div class="vis-pair">
+          <div>
+            <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="IMG_5760.jpeg" alt="Kevin with Daymond John">
+            <p class="vis-caption">With Daymond John</p>
+          </div>
+          <div>
+            <img src="IMG_5853.jpeg" alt="Kevin at Agility" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">Networking with Dr. Mike Varshavski at Agility</p>
+          </div>
+        </div>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="Mick_Caption.png" alt="Mick Ebeling speaker announcement">
+          <p class="social-post-meta">Mick Ebeling speaker announcement — CMI Instagram</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 ADWEEK -->
+  <div class="project" id="awny">
+    <div class="project-header">
+      <div class="project-number">03</div>
+      <div class="project-meta">
+        <p class="project-category">Industry Engagement & Corporate Reporting</p>
+        <h2 class="project-title">Advertising Week New York 2025</h2>
+        <p class="project-subtitle">On-Site Coverage & Reporting · New York City · October 2025</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Event Coverage & Reporting</span>
+      <span class="skill-pill">Corporate Communications</span>
+      <span class="skill-pill">Multimedia Documentation</span>
+      <span class="skill-pill">Thought Leadership Distribution</span>
+      <span class="skill-pill">Executive Visibility Support</span>
+    </div>
+    <div class="project-body">
+      <div class="project-text">
+        <p>In October 2025, I was deployed by <strong>CMI Media Group</strong> as ground coverage representative at <strong>Advertising Week New York</strong> — one of the most prominent annual gatherings of media, marketing, and advertising professionals in the country.</p>
+        <p>I supported three panels featuring CMI executives, producing <strong>daily recap reports for internal distribution</strong>, capturing multimedia content for social platforms, and amplifying executive insights through company communications. Beyond assigned coverage, I proactively attended cross-industry panels to deepen my understanding of agency life, digital innovation, and media strategy beyond healthcare.</p>
+        <p>Among the many industry leaders I had the opportunity to connect with was <strong>Gary Vaynerchuk (Gary Vee)</strong> — entrepreneur and one of the most recognized voices in digital marketing and brand strategy.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Delivered real-time thought leadership updates to internal stakeholders and external audiences, reinforcing CMI's industry presence and ensuring visibility across one of the media industry's premier annual conferences.</p>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="IMG_6684.jpeg" alt="Kevin at Advertising Week New York 2025" class="vis-img vis-img-tall">
+        <p class="vis-caption">Advertising Week New York 2025</p>
+        <div class="vis-pair">
+          <div>
+            <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="AWNY1.jpg" alt="Kevin at AWNY panel">
+            <p class="vis-caption">Panel coverage at AWNY</p>
+          </div>
+          <div>
+            <img src="AWNY4.jpeg" alt="AWNY Investors Summit" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">With Gary Vaynerchuk</p>
+          </div>
+        </div>
+        <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="AWNY2.jpg" alt="Kevin with Gary Vee" class="vis-img vis-img-short">
+        <p class="vis-caption">Learnings from Investors Summit — AI Disrupts Marketing</p>
+        <div class="social-post">
+          <img src="24-Post-Feed-LinkedIn-03-04-2026_07_37_PM.png" alt="ChatLabs Real or AI interview" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+          <p class="social-post-meta">Featured in ChatLabs "Real or AI?" — <a href="https://www.linkedin.com/feed/update/urn:li:activity:7386791705791873024/" target="_blank" style="color:#E1C699; text-decoration:none; border-bottom:1px solid rgba(212,175,55,0.3);">Watch on LinkedIn</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 CONFERENCE -->
+  <div class="project" id="conferences">
+    <div class="project-header">
+      <div class="project-number">04</div>
+      <div class="project-meta">
+        <p class="project-category">Industry Conference Strategy & Executive Coverage</p>
+        <h2 class="project-title">Industry Conference Strategy<br>& Executive Coverage</h2>
+        <p class="project-subtitle">CMI Media Group · Multiple Events · 2025</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Pre-Event Promotion</span>
+      <span class="skill-pill">Executive Preparation</span>
+      <span class="skill-pill">Social Media Coverage</span>
+      <span class="skill-pill">Content Direction</span>
+      <span class="skill-pill">Newsletter Copywriting</span>
+      <span class="skill-pill">Thought Leadership</span>
+    </div>
+    <div class="project-body">
+      <div class="project-text">
+        <p>Throughout 2025, I oversaw the <strong>full communications lifecycle</strong> for CMI Media Group executives attending and speaking at industry conferences — from the moment an event was announced to the moment our audience read about it.</p>
+        <p>For <strong>panelists and speakers</strong>, I crafted and published pre-event social media content to promote their sessions, building anticipation and driving visibility for both the executive and CMI's brand ahead of each appearance.</p>
+        <p>For <strong>all attendees representing CMI</strong>, I provided strategic briefings on what types of photos, moments, and content to capture on-site — ensuring we returned with everything needed to tell a compelling story across our channels. I directed the visual and editorial angle before anyone stepped foot in the door.</p>
+        <p>Post-event, I <strong>drafted recap writeups</strong> for CMI's industry newsletter, The Scoop — synthesizing key takeaways, executive insights, and industry learnings into polished content distributed to healthcare marketing professionals across the country.</p>
+        <p>Conferences covered include the <strong>DHC Group Summit, MediaPost Insider Summit, Meta Health Summit, Salesforce Dreamforce, HLTH Summit</strong>, and more.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Built a consistent, repeatable content pipeline around industry events — amplifying executive visibility before, during, and after each conference. Ensured CMI's audience never missed a moment, turning every attendance into a multi-touchpoint communications opportunity.</p>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <div class="vis-pair">
+          <div>
+            <img src="8-Instagram-03-04-2026_08_03_PM.png" alt="Josh Simon — DHC Group Summit speaker promo" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">Josh Simon — DHC Group Summit</p>
+          </div>
+          <div>
+            <img src="8-Instagram-03-04-2026_08_04_PM.png" alt="MediaPost Insider Summit coverage" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">MediaPost Insider Summit</p>
+          </div>
+        </div>
+        <div class="vis-pair">
+          <div>
+            <img src="8-Instagram-03-04-2026_08_23_PM.png" alt="Meta Health Summit" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">Meta Health Summit</p>
+          </div>
+          <div>
+            <img src="8-Instagram-03-04-2026_08_34_PM.png" alt="Salesforce Dreamforce 2025" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">Salesforce Dreamforce 2025</p>
+          </div>
+        </div>
+        <div class="social-post">
+          <img src="8-Instagram-03-04-2026_08_35_PM.png" alt="Sandy Weag — HLTH Summit speaker promo" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+          <p class="social-post-meta">Sandy Weag — HLTH Summit speaker promo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 SOCIAL MEDIA -->
+  <div class="project" id="social">
+    <div class="project-header">
+      <div class="project-number">05</div>
+      <div class="project-meta">
+        <p class="project-category">Corporate Social Media Strategy & Content Creation</p>
+        <h2 class="project-title">Corporate Social Media Management</h2>
+        <p class="project-subtitle">CMI Media Group · LinkedIn, Instagram, X, Facebook · 2025</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Content Strategy</span>
+      <span class="skill-pill">Social Media Management</span>
+      <span class="skill-pill">Trend Research</span>
+      <span class="skill-pill">Short-Form Video</span>
+      <span class="skill-pill">Performance Optimization</span>
+      <span class="skill-pill">Analytics & Reporting</span>
+    </div>
+    <div class="project-body reverse">
+      <div class="project-text">
+        <p>As part of the PR & Communications team, I managed and optimized CMI Media Group's <strong>multi-platform social media presence</strong> across LinkedIn, Instagram, X, and Facebook — producing content that reflected the agency's brand voice, promoted events, amplified executive visibility, and engaged its professional audience.</p>
+        <p>I collaborated with internal teams to plan and produce <strong>short-form video content, speaker announcements, event promotional graphics, thought leadership posts, and event recap highlights</strong> — each crafted to drive engagement and reinforce CMI's position as a leading voice in healthcare marketing.</p>
+        <p>I conducted <strong>ongoing trend analysis</strong> within healthcare marketing and agency spaces, and compiled quarterly PR and communications performance reports for leadership review.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Contributed to sustained audience growth and engagement across platforms throughout 2025 — supporting CMI's digital footprint, brand visibility, and executive presence within the healthcare marketing industry.</p>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="9-Instagram-03-02-2026_09_31_PM.png" alt="TikTok Health Summit post">
+          <p class="social-post-meta">TikTok Health Summit recap — CMI Instagram</p>
+        </div>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="Instagram-03-04-2026_07_43_PM.png" alt="Reddit x CMI partnership announcement">
+          <p class="social-post-meta">Reddit x CMI Partnership — CMI Instagram</p>
+        </div>
+        <div class="social-post">
+          <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="Speaker_promo.png" alt="Oleg Korenfeld Samba Summit post">
+          <p class="social-post-meta">Executive speaker content — CMI Instagram</p>
+        </div>
+        <img onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" src="Swing.png" alt="Charity Golf Tournament" class="vis-img vis-img-short">
+        <p class="vis-caption">Gene's Swing Fore Sarcoidosis — event promotion</p>
+        <div class="vis-pair">
+          <div>
+            <img src="IMG_8151.jpg" alt="CMI Reel — When the social media team asks you to be in a reel" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">2,576 views — CMI Office Reel</p>
+          </div>
+          <div>
+            <img src="IMG_8149.jpg" alt="CMI Reel — POV your intern is Gen Z" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in">
+            <p class="vis-caption">3,627 views — Gen Z Intern Reel</p>
+          </div>
+        </div>
+        <p class="vis-caption" style="margin-top:-4px; color:#6b5e3a;">Reels produced & promoted to drive social engagement</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 AWARDS -->
+  <div class="project" id="awards">
+    <div class="project-header">
+      <div class="project-number">06</div>
+      <div class="project-meta">
+        <p class="project-category">Award Strategy & Industry Recognition</p>
+        <h2 class="project-title">Industry Award Submissions & Recognition</h2>
+        <p class="project-subtitle">CMI Media Group · 2025</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Competitive Research</span>
+      <span class="skill-pill">Executive Nomination Strategy</span>
+      <span class="skill-pill">Submission Writing</span>
+      <span class="skill-pill">Strategic Positioning</span>
+      <span class="skill-pill">Brand Visibility</span>
+    </div>
+    <div class="project-body">
+      <div class="project-text">
+        <p>I led the <strong>research, strategy, writing, and submission</strong> of several industry award nominations for CMI Media Group and its executive leadership team — identifying optimal programs, crafting compelling submission narratives, and coordinating with leadership to powerfully represent the agency's achievements and competitive strengths.</p>
+        <p>This was high-stakes PR work requiring strategic positioning, persuasive writing, and a deep understanding of the healthcare marketing landscape. The results speak for themselves.</p>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Secured multiple award wins and finalist placements across the industry's most respected programs — significantly elevating CMI Media Group's brand recognition, executive visibility, and competitive standing within the healthcare marketing community.</p>
+        </div>
+      </div>
+      <div class="project-visuals">
+        <div class="awards-grid">
+          <div class="award-card">
+            <p class="award-status winner">🏆 Winner</p>
+            <p class="award-name">CEO of the Year</p>
+            <p class="award-program">PM360 ELITE Trailblazers Awards</p>
+            <p class="award-year">2025</p>
+          </div>
+          <div class="award-card">
+            <p class="award-status winner">🥇 Gold Winner</p>
+            <p class="award-name">Special Event</p>
+            <p class="award-program">MarCom Awards</p>
+            <p class="award-year">2025</p>
+          </div>
+          <div class="award-card">
+            <p class="award-status finalist">4× Finalist</p>
+            <p class="award-name">Multiple Categories</p>
+            <p class="award-program">US Search Awards</p>
+            <p class="award-year">2025</p>
+          </div>
+          <div class="award-card">
+            <p class="award-status finalist">Shortlisted</p>
+            <p class="award-name">Agency Sustainability</p>
+            <p class="award-program">Campaign Ad Net Zero Awards</p>
+            <p class="award-year">2025</p>
+          </div>
+          <div class="award-card">
+            <p class="award-status finalist">Finalist</p>
+            <p class="award-name">Multiple Categories</p>
+            <p class="award-program">MM+M Awards</p>
+            <p class="award-year">2025</p>
+          </div>
+          <div class="award-card">
+            <p class="award-status winner">🏆 3× Winner</p>
+            <p class="award-name">40 Under 40</p>
+            <p class="award-program">MM+M</p>
+            <p class="award-year">2025</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 RESEARCH -->
+  <div class="project" id="research">
+    <div class="project-header">
+      <div class="project-number">07</div>
+      <div class="project-meta">
+        <p class="project-category">Strategic Research & Executive Reporting</p>
+        <h2 class="project-title">Executive Competitive Omnichannel Research Initiative</h2>
+        <p class="project-subtitle">CMI Media Group · Q3 2025 · Confidential — Summary Only</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">Competitive Intelligence</span>
+      <span class="skill-pill">Strategic Analysis</span>
+      <span class="skill-pill">Executive Reporting</span>
+      <span class="skill-pill">Market Positioning</span>
+      <span class="skill-pill">Omnichannel Strategy</span>
+    </div>
+    <div class="project-body full">
+      <div class="research-body">
+        <p>In late Q3 2025, I led a <strong>competitive research initiative commissioned for CMI Media Group's Executive Leadership Team</strong>, focused on omnichannel offerings within the healthcare marketing space. Leveraging my knowledge of CMI's proprietary <strong>Empower AMO platform</strong>, I conducted a comprehensive analysis of top competitor omnichannel strategies — examining messaging frameworks, positioning tactics, platform capabilities, and promotional approaches.</p>
+        <p>The project synthesized multi-source industry intelligence into a <strong>strategic recommendation framework</strong> designed to strengthen CMI's competitive positioning and support long-term differentiation within the omnichannel space.</p>
+        <div class="stat-row">
+          <div class="stat-box">
+            <p class="stat-number">ELT</p>
+            <p class="stat-label">Delivered directly to Executive Leadership Team</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-number">Q3</p>
+            <p class="stat-label">Completed on schedule in Q3 2025</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-number">360°</p>
+            <p class="stat-label">Full competitive landscape coverage</p>
+          </div>
+        </div>
+        <div class="outcome-box">
+          <p class="outcome-label">Outcome & Impact</p>
+          <p class="outcome-text">Delivered a comprehensive executive-level competitive analysis that informed future positioning strategy and supported long-term differentiation within the omnichannel healthcare marketing space. Due to its confidential nature, specific findings are not publicly shared.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 FREELANCE -->
+  <div class="project" id="freelance">
+    <div class="project-header">
+      <div class="project-number">08</div>
+      <div class="project-meta">
+        <p class="project-category">Prior Work · 2024</p>
+        <h2 class="project-title">Freelance News Writing<br>& Content Syndication</h2>
+        <p class="project-subtitle">Lancashire Hudson · Ghostwritten Editorial · 2024</p>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-pill">News Writing</span>
+      <span class="skill-pill">Editorial Research</span>
+      <span class="skill-pill">Content Syndication</span>
+      <span class="skill-pill">Email Distribution</span>
+      <span class="skill-pill">Headline Writing</span>
+      <span class="skill-pill">Ghostwriting</span>
+    </div>
+    <div class="freelance-layout">
+      <!-- Top row: context text left, first article right -->
+      <div class="freelance-top">
+        <div class="project-text">
+          <p>Prior to joining CMI Media Group, I worked as a <strong>freelance news writer for Lancashire Hudson</strong> — producing editorial-quality news content on assignment, ghostwritten for third-party publications and distributed through industry email channels.</p>
+          <p>Each piece required rapid research, accurate sourcing, and the ability to craft <strong>two distinct versions of the same story</strong>: a clean, journalistic web article and a punchy, high-open-rate email headline optimized for click-through. This dual-format discipline sharpened both my long-form writing and my instinct for audience-first copy.</p>
+          <p>Topics spanned human interest, entertainment, pop culture, and science — reflecting the breadth and adaptability expected of a working freelance news writer.</p>
+          <div class="outcome-box">
+            <p class="outcome-label">Context</p>
+            <p class="outcome-text">All articles were ghostwritten for third-party use and are not publicly attributed. Samples are provided here as writing portfolio pieces only.</p>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-tag">Human Interest</div>
+          <img src="article_oklahoma.png" class="article-img" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" alt="Oklahoma pitbull article">
+          <div class="article-card-body">
+            <h3 class="article-headline">Oklahoma Student Viciously Attacked by Pitbull, Gets 100 Stitches</h3>
+            <p class="article-email-hed"><span>Email headline:</span> "Vicious ATTACK — College Student STUMPED"</p>
+            <p class="article-excerpt">A female college student from Stillwater, Oklahoma received 100 stitches after being bitten in the face by a pitbull she had previously played with.</p>
+            <p class="article-enlarge-hint">Click image to enlarge</p>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom row: 4 articles side by side -->
+      <div class="freelance-grid">
+        <div class="article-card">
+          <div class="article-tag">Entertainment</div>
+          <img src="article_mrbeast.png" class="article-img" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" alt="MrBeast article">
+          <div class="article-card-body">
+            <h3 class="article-headline">Popular YouTuber Mr. Beast's Collaborator Accused of Grooming Minors</h3>
+            <p class="article-email-hed"><span>Email headline:</span> "Youtuber In TROUBLE — Horrific Criminal Charges"</p>
+            <p class="article-excerpt">Covered the controversy surrounding MrBeast collaborator Ava Kris Tyson, including public statements from both parties.</p>
+            <p class="article-enlarge-hint">Click image to enlarge</p>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-tag">Entertainment</div>
+          <img src="article_slash.png" class="article-img" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" alt="Slash stepdaughter article">
+          <div class="article-card-body">
+            <h3 class="article-headline">Slash's Stepdaughter, Lucy Bleu-Knight, Dies Aged 25</h3>
+            <p class="article-email-hed"><span>Email headline:</span> "Rock Icon's Stepdaughter DEAD — Fans Shocked"</p>
+            <p class="article-excerpt">Reported on the passing of Lucy-Bleu Knight, stepdaughter of Guns N' Roses guitarist Slash, handled with care and sensitivity.</p>
+            <p class="article-enlarge-hint">Click image to enlarge</p>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-tag">Science & Nature</div>
+          <img src="article_texas.png" class="article-img" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" alt="Texas worms article">
+          <div class="article-card-body">
+            <h3 class="article-headline">Texas Rain Storms Set to Bring Toxic Worms — Pet Parents Beware</h3>
+            <p class="article-email-hed"><span>Email headline:</span> "Slimy INVASION — Texas Flooded With THIS"</p>
+            <p class="article-excerpt">Reported on the expected emergence of hammerhead flatworms following severe Texas flooding and the dangers posed to pets.</p>
+            <p class="article-enlarge-hint">Click image to enlarge</p>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-tag">Entertainment</div>
+          <img src="article_janet.png" class="article-img" onclick="openLightbox(this.src, this.alt)" style="cursor:zoom-in" alt="Janet Jackson article">
+          <div class="article-card-body">
+            <h3 class="article-headline">Janet Jackson Opens Up About Experience as a Child Star</h3>
+            <p class="article-email-hed"><span>Email headline:</span> "Janet Jackson BREAKS Silence On STRUGGLES"</p>
+            <p class="article-excerpt">Covered Janet Jackson's candid BBC interview on growing up in the spotlight and her path to over 100 million records sold.</p>
+            <p class="article-enlarge-hint">Click image to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+function openLightbox(src, alt) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-img').alt = alt;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("open");
+}
+</script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
 </body>
 </html>
