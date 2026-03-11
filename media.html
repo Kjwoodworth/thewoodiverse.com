@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media | Kevin James Woodworth</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  background: #0a0a0a;
+  color: #f0ece0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,175,55,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(212,175,55,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ---------- SIDE MENU ---------- */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 280px;
+  height: 100%;
+  background: #0d0d0d;
+  border-right: 1px solid rgba(212,175,55,0.15);
+  padding: 90px 36px;
+  transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2500;
+}
+.side-menu.open { left: 0; }
+.side-menu a {
+  display: block;
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #c0aa6a;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.side-menu a:hover { color: #FFD700; }
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+}
+.menu-overlay.open { display: block; }
+
+/* ---------- TOP NAV ---------- */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid rgba(212,175,55,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 2000;
+  backdrop-filter: blur(8px);
+}
+.topbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 400;
+  background: linear-gradient(90deg, #FFD700, #E1C699);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+.topbar-nav { display: flex; gap: 32px; }
+.topbar-nav a {
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c0aa6a;
+  transition: color 0.2s;
+}
+.topbar-nav a:hover, .topbar-nav a.active { color: #FFD700; }
+.hamburger {
+  font-size: 20px;
+  cursor: pointer;
+  color: #d4c078;
+  background: none;
+  border: none;
+  z-index: 3000;
+  transition: color 0.2s;
+}
+.hamburger:hover { color: #FFD700; }
+
+/* ---------- CONTENT ---------- */
+.placeholder-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+}
+
+.placeholder-eyebrow {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c0aa6a;
+  font-weight: 600;
+  margin: 0;
+}
+
+.placeholder-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 400;
+  margin: 12px 0 4px;
+  background: linear-gradient(135deg, #FFD700 0%, #E1C699 50%, #c9a84c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.coming-soon {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #d4c078;
+  font-weight: 500;
+  margin: 20px 0 0;
+}
+
+.placeholder-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  margin: 24px auto 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 48px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c0aa6a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212,175,55,0.3);
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: #FFD700; }
+
+/* ---------- FLYING SAUCER ---------- */
+.saucer-wrap {
+  margin-top: 40px;
+}
+
+@keyframes saucer-float {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50%       { transform: translateY(-18px) rotate(3deg); }
+}
+@keyframes saucer-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes beam-pulse {
+  0%, 100% { opacity: 0.15; transform: scaleX(1); }
+  50%       { opacity: 0.35; transform: scaleX(1.08); }
+}
+@keyframes light-blink {
+  0%, 90%, 100% { opacity: 1; }
+  95%            { opacity: 0.2; }
+}
+
+.saucer-svg {
+  animation: saucer-float 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(212,175,55,0.25));
+}
+.saucer-dome-ring {
+  animation: saucer-spin 8s linear infinite;
+  transform-origin: 100px 62px;
+}
+.tractor-beam {
+  animation: beam-pulse 3.5s ease-in-out infinite;
+  transform-origin: 100px 110px;
+}
+
+/* stars background */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<svg class="stars" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="stargrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <!-- scattered tiny stars -->
+  <circle cx="8%" cy="12%" r="1" fill="#FFD700" opacity="0.4"/>
+  <circle cx="15%" cy="28%" r="1.5" fill="#E1C699" opacity="0.3"/>
+  <circle cx="22%" cy="8%" r="1" fill="#FFD700" opacity="0.5"/>
+  <circle cx="35%" cy="18%" r="1" fill="#E1C699" opacity="0.35"/>
+  <circle cx="48%" cy="6%" r="1.5" fill="#FFD700" opacity="0.4"/>
+  <circle cx="62%" cy="22%" r="1" fill="#E1C699" opacity="0.3"/>
+  <circle cx="75%" cy="10%" r="1" fill="#FFD700" opacity="0.45"/>
+  <circle cx="85%" cy="30%" r="1.5" fill="#E1C699" opacity="0.35"/>
+  <circle cx="92%" cy="15%" r="1" fill="#FFD700" opacity="0.4"/>
+  <circle cx="5%" cy="55%" r="1" fill="#E1C699" opacity="0.3"/>
+  <circle cx="18%" cy="70%" r="1.5" fill="#FFD700" opacity="0.25"/>
+  <circle cx="88%" cy="60%" r="1" fill="#E1C699" opacity="0.35"/>
+  <circle cx="95%" cy="80%" r="1.5" fill="#FFD700" opacity="0.3"/>
+  <circle cx="70%" cy="85%" r="1" fill="#E1C699" opacity="0.25"/>
+  <circle cx="40%" cy="92%" r="1" fill="#FFD700" opacity="0.3"/>
+  <circle cx="28%" cy="82%" r="1.5" fill="#E1C699" opacity="0.2"/>
+  <circle cx="55%" cy="78%" r="1" fill="#FFD700" opacity="0.3"/>
+</svg>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="about.html" onclick="toggleMenu()">About</a>
+  <a href="portfolio.html" onclick="toggleMenu()">Portfolio</a>
+  <a href="media.html" onclick="toggleMenu()">Media</a>
+  <a href="wo.html" onclick="toggleMenu()">WO</a>
+  <a href="contact.html" onclick="toggleMenu()">Contact</a>
+</div>
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+<!-- Top Nav -->
+<nav class="topbar">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <a href="index.html" class="topbar-logo" style="display:flex;align-items:center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="44" height="44" style="overflow:visible;">
+      <defs>
+        <linearGradient id="wgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#FFD700"/>
+          <stop offset="100%" style="stop-color:#E1C699"/>
+        </linearGradient>
+        <style>
+          @keyframes nav-orbit { from{transform:rotate(0deg) translateX(22px) rotate(0deg)} to{transform:rotate(360deg) translateX(22px) rotate(-360deg)} }
+          .nav-planet { animation: nav-orbit 5s linear infinite; transform-origin: 30px 30px; }
+        </style>
+      </defs>
+      <ellipse cx="30" cy="30" rx="22" ry="7" fill="none" stroke="url(#wgrad)" stroke-width="1" opacity="0.35" transform="rotate(-15,30,30)"/>
+      <text x="30" y="37" text-anchor="middle" font-family="Playfair Display, serif" font-size="26" font-weight="400" fill="url(#wgrad)">W</text>
+      <g class="nav-planet"><circle cx="30" cy="30" r="3" fill="#D4AF37" transform="rotate(-15,30,30)"/></g>
+    </svg>
+  </a>
+  <div class="topbar-nav">
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="media.html" class="active">Media</a>
+    <a href="wo.html">WO</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- Content -->
+<div class="placeholder-wrap">
+  <p class="placeholder-eyebrow">Kevin James Woodworth</p>
+  <h1 class="placeholder-title">Media</h1>
+  <div class="placeholder-line"></div>
+  <p class="coming-soon">Coming Soon</p>
+
+  <!-- Flying Saucer -->
+  <div class="saucer-wrap">
+    <svg class="saucer-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="200" height="180">
+      <defs>
+        <linearGradient id="bodygrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#E1C699"/>
+          <stop offset="50%" style="stop-color:#c9a84c"/>
+          <stop offset="100%" style="stop-color:#8a6a20"/>
+        </linearGradient>
+        <linearGradient id="domegrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#d0ecff;stop-opacity:0.7"/>
+          <stop offset="100%" style="stop-color:#a0c8e8;stop-opacity:0.3"/>
+        </linearGradient>
+        <linearGradient id="beamgrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5"/>
+          <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+        </linearGradient>
+        <radialGradient id="glowgrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.3"/>
+          <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- tractor beam -->
+      <g class="tractor-beam">
+        <polygon points="75,112 125,112 155,160 45,160" fill="url(#beamgrad)"/>
+      </g>
+
+      <!-- glow under saucer -->
+      <ellipse cx="100" cy="115" rx="55" ry="12" fill="url(#glowgrad)"/>
+
+      <!-- saucer body -->
+      <ellipse cx="100" cy="105" rx="72" ry="18" fill="url(#bodygrad)"/>
+      <ellipse cx="100" cy="102" rx="72" ry="14" fill="url(#bodygrad)"/>
+
+      <!-- rim detail -->
+      <ellipse cx="100" cy="105" rx="72" ry="18" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+      <ellipse cx="100" cy="102" rx="60" ry="10" fill="none" stroke="#E1C699" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- spinning ring detail -->
+      <g class="saucer-dome-ring">
+        <ellipse cx="100" cy="98" rx="40" ry="6" fill="none" stroke="#FFD700" stroke-width="1" stroke-dasharray="4 6" opacity="0.5"/>
+      </g>
+
+      <!-- lights along rim -->
+      <circle cx="48" cy="105" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0s" repeatCount="indefinite"/></circle>
+      <circle cx="68" cy="110" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.2s" repeatCount="indefinite"/></circle>
+      <circle cx="88" cy="113" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.4s" repeatCount="indefinite"/></circle>
+      <circle cx="112" cy="113" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.6s" repeatCount="indefinite"/></circle>
+      <circle cx="132" cy="110" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.8s" repeatCount="indefinite"/></circle>
+      <circle cx="152" cy="105" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="1.0s" repeatCount="indefinite"/></circle>
+
+      <!-- dome -->
+      <ellipse cx="100" cy="98" rx="36" ry="10" fill="url(#bodygrad)"/>
+      <path d="M 64 98 Q 64 55 100 55 Q 136 55 136 98" fill="url(#domegrad)" stroke="#E1C699" stroke-width="0.8" opacity="0.8"/>
+      <!-- dome shine -->
+      <path d="M 72 88 Q 75 68 90 62" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <a href="index.html" class="back-link">← Back to Home</a>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("open");
+  document.getElementById("menuOverlay").classList.toggle("open");
+}
+</script>
+</body>
+</html>
