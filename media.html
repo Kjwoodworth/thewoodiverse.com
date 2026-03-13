@@ -4,264 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Media | Kevin James Woodworth</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
 *, *::before, *::after { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: 'Raleway', sans-serif;
-  background: #0a0a0a;
-  color: #f0ece0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.5;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,175,55,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(212,175,55,0.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-/* ---------- SIDE MENU ---------- */
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -320px;
-  width: 280px;
-  height: 100%;
-  background: #0d0d0d;
-  border-right: 1px solid rgba(212,175,55,0.15);
-  padding: 90px 36px;
-  transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
-  z-index: 2500;
-}
+body { margin: 0; font-family: 'Raleway', sans-serif; background: #0a0a0a; color: #f0ece0; min-height: 100vh; }
+html { scroll-behavior: smooth; }
+body::before { content: ""; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
+.side-menu { position: fixed; top: 0; left: -320px; width: 280px; height: 100%; background: #0d0d0d; border-right: 1px solid rgba(212,175,55,0.15); padding: 90px 36px; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); z-index: 2500; }
 .side-menu.open { left: 0; }
-.side-menu a {
-  display: block;
-  margin-bottom: 24px;
-  font-size: 12px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #c0aa6a;
-  font-weight: 600;
-  transition: color 0.2s;
-}
+.side-menu a { display: block; margin-bottom: 24px; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; text-decoration: none; color: #c0aa6a; font-weight: 600; transition: color 0.2s; }
 .side-menu a:hover { color: #FFD700; }
-.menu-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 2000;
-}
+.menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; }
 .menu-overlay.open { display: block; }
-
-/* ---------- TOP NAV ---------- */
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 64px;
-  background: rgba(10,10,10,0.95);
-  border-bottom: 1px solid rgba(212,175,55,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
-  z-index: 2000;
-  backdrop-filter: blur(8px);
-}
-.topbar-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  font-weight: 400;
-  background: linear-gradient(90deg, #FFD700, #E1C699);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-decoration: none;
-}
+.topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; background: rgba(10,10,10,0.95); border-bottom: 1px solid rgba(212,175,55,0.12); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; z-index: 2000; backdrop-filter: blur(8px); }
+.topbar-logo { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 400; background: linear-gradient(90deg, #FFD700, #E1C699); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
 .topbar-nav { display: flex; gap: 32px; }
-.topbar-nav a {
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #c0aa6a;
-  transition: color 0.2s;
-}
+.topbar-nav a { text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #c0aa6a; transition: color 0.2s; }
 .topbar-nav a:hover, .topbar-nav a.active { color: #FFD700; }
-.hamburger {
-  font-size: 20px;
-  cursor: pointer;
-  color: #d4c078;
-  background: none;
-  border: none;
-  z-index: 3000;
-  transition: color 0.2s;
-}
+.hamburger { font-size: 20px; cursor: pointer; color: #d4c078; background: none; border: none; z-index: 3000; transition: color 0.2s; }
 .hamburger:hover { color: #FFD700; }
-
-/* ---------- CONTENT ---------- */
-.placeholder-wrap {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 20px;
-}
-
-.placeholder-eyebrow {
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #c0aa6a;
-  font-weight: 600;
-  margin: 0;
-}
-
-.placeholder-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 6vw, 68px);
-  font-weight: 400;
-  margin: 12px 0 4px;
-  background: linear-gradient(135deg, #FFD700 0%, #E1C699 50%, #c9a84c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.1;
-}
-
-.coming-soon {
-  font-size: 12px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: #d4c078;
-  font-weight: 500;
-  margin: 20px 0 0;
-}
-
-.placeholder-line {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
-  margin: 24px auto 0;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 48px;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #c0aa6a;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(212,175,55,0.3);
-  padding-bottom: 2px;
-  transition: color 0.2s;
-}
-.back-link:hover { color: #FFD700; }
-
-/* ---------- FLYING SAUCER ---------- */
-.saucer-wrap {
-  margin-top: 40px;
-}
-
-@keyframes saucer-float {
-  0%, 100% { transform: translateY(0px) rotate(-3deg); }
-  50%       { transform: translateY(-18px) rotate(3deg); }
-}
-@keyframes saucer-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes beam-pulse {
-  0%, 100% { opacity: 0.15; transform: scaleX(1); }
-  50%       { opacity: 0.35; transform: scaleX(1.08); }
-}
-@keyframes light-blink {
-  0%, 90%, 100% { opacity: 1; }
-  95%            { opacity: 0.2; }
-}
-
-.saucer-svg {
-  animation: saucer-float 3.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(212,175,55,0.25));
-}
-.saucer-dome-ring {
-  animation: saucer-spin 8s linear infinite;
-  transform-origin: 100px 62px;
-}
-.tractor-beam {
-  animation: beam-pulse 3.5s ease-in-out infinite;
-  transform-origin: 100px 110px;
-}
-
-/* stars background */
-.stars {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
+.page-wrap { max-width: 1100px; margin: 0 auto; padding: 120px 40px 80px; }
+.page-header { margin-bottom: 70px; }
+.page-header-eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #c0aa6a; font-weight: 600; margin: 0 0 16px; }
+.page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 400; margin: 0; background: linear-gradient(135deg, #FFD700 0%, #E1C699 50%, #c9a84c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+.page-header-line { width: 60px; height: 2px; background: linear-gradient(90deg, #FFD700, transparent); margin-top: 24px; }
+.media-section { margin-bottom: 80px; }
+.section-eyebrow { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #c0aa6a; font-weight: 600; margin: 0 0 10px; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #f0ece0; margin: 0 0 6px; line-height: 1.3; }
+.section-subtitle { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #b0a070; margin: 0 0 28px; font-weight: 400; }
+.section-desc { font-size: 14px; line-height: 1.9; color: #c8c0a8; font-weight: 300; margin: 0 0 36px; max-width: 700px; }
+.section-divider { border: none; border-top: 1px solid rgba(212,175,55,0.1); margin: 60px 0; }
+.video-grid { display: flex; flex-direction: column; gap: 32px; }
+.video-card { border: 1px solid rgba(212,175,55,0.1); background: rgba(255,255,255,0.01); transition: border-color 0.3s; }
+.video-card:hover { border-color: rgba(212,175,55,0.22); }
+.video-card-inner { display: grid; grid-template-columns: 340px 1fr; gap: 0; }
+.video-thumb { position: relative; background: #111; overflow: hidden; }
+.video-thumb iframe { width: 100%; height: 100%; border: none; display: block; aspect-ratio: 16/9; }
+.video-info { padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; }
+.video-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #c0aa6a; font-weight: 600; margin: 0 0 10px; }
+.video-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 400; color: #f0ece0; margin: 0 0 12px; line-height: 1.4; }
+.video-desc { font-size: 13px; line-height: 1.85; color: #c8c0a8; font-weight: 300; margin: 0 0 16px; }
+.video-meta { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #9a8a5a; margin: 0 0 16px; }
+.video-links { display: flex; flex-wrap: wrap; gap: 16px; }
+.video-link { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #E1C699; text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 2px; transition: color 0.2s; }
+.video-link:hover { color: #FFD700; }
+.quote-box { border-left: 2px solid rgba(212,175,55,0.4); padding: 12px 20px; margin: 0 0 16px; background: rgba(212,175,55,0.03); }
+.quote-text { font-size: 13px; line-height: 1.8; color: #c4ae88; font-style: italic; font-weight: 300; margin: 0; }
+.kean-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.kean-video-card { border: 1px solid rgba(212,175,55,0.1); background: rgba(255,255,255,0.01); transition: border-color 0.3s; display: flex; flex-direction: column; }
+.kean-video-card:hover { border-color: rgba(212,175,55,0.22); }
+.kean-video-embed { aspect-ratio: 16/9; background: #111; }
+.kean-video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+.kean-video-info { padding: 16px 20px; }
+.kean-video-title { font-size: 13px; font-weight: 500; color: #f0ece0; margin: 0 0 6px; line-height: 1.4; }
+.kean-video-desc { font-size: 12px; line-height: 1.7; color: #a89878; font-weight: 300; margin: 0 0 10px; }
+.kean-video-link { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #c0aa6a; text-decoration: none; border-bottom: 1px solid rgba(212,175,55,0.25); padding-bottom: 1px; transition: color 0.2s; }
+.kean-video-link:hover { color: #FFD700; }
+@media (max-width: 768px) { .page-wrap { padding: 100px 20px 60px; } .video-card-inner { grid-template-columns: 1fr; } .kean-video-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- Stars -->
-<svg class="stars" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="stargrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
-    </radialGradient>
-  </defs>
-  <!-- scattered tiny stars -->
-  <circle cx="8%" cy="12%" r="1" fill="#FFD700" opacity="0.4"/>
-  <circle cx="15%" cy="28%" r="1.5" fill="#E1C699" opacity="0.3"/>
-  <circle cx="22%" cy="8%" r="1" fill="#FFD700" opacity="0.5"/>
-  <circle cx="35%" cy="18%" r="1" fill="#E1C699" opacity="0.35"/>
-  <circle cx="48%" cy="6%" r="1.5" fill="#FFD700" opacity="0.4"/>
-  <circle cx="62%" cy="22%" r="1" fill="#E1C699" opacity="0.3"/>
-  <circle cx="75%" cy="10%" r="1" fill="#FFD700" opacity="0.45"/>
-  <circle cx="85%" cy="30%" r="1.5" fill="#E1C699" opacity="0.35"/>
-  <circle cx="92%" cy="15%" r="1" fill="#FFD700" opacity="0.4"/>
-  <circle cx="5%" cy="55%" r="1" fill="#E1C699" opacity="0.3"/>
-  <circle cx="18%" cy="70%" r="1.5" fill="#FFD700" opacity="0.25"/>
-  <circle cx="88%" cy="60%" r="1" fill="#E1C699" opacity="0.35"/>
-  <circle cx="95%" cy="80%" r="1.5" fill="#FFD700" opacity="0.3"/>
-  <circle cx="70%" cy="85%" r="1" fill="#E1C699" opacity="0.25"/>
-  <circle cx="40%" cy="92%" r="1" fill="#FFD700" opacity="0.3"/>
-  <circle cx="28%" cy="82%" r="1.5" fill="#E1C699" opacity="0.2"/>
-  <circle cx="55%" cy="78%" r="1" fill="#FFD700" opacity="0.3"/>
-</svg>
-
-<!-- Side Menu -->
 <div class="side-menu" id="sideMenu">
   <a href="index.html" onclick="toggleMenu()">Home</a>
   <a href="about.html" onclick="toggleMenu()">About</a>
@@ -272,26 +75,9 @@ body::after {
 </div>
 <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
-<!-- Top Nav -->
 <nav class="topbar">
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
-  <a href="index.html" class="topbar-logo" style="display:flex;align-items:center;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="44" height="44" style="overflow:visible;">
-      <defs>
-        <linearGradient id="wgrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#FFD700"/>
-          <stop offset="100%" style="stop-color:#E1C699"/>
-        </linearGradient>
-        <style>
-          @keyframes nav-orbit { from{transform:rotate(0deg) translateX(22px) rotate(0deg)} to{transform:rotate(360deg) translateX(22px) rotate(-360deg)} }
-          .nav-planet { animation: nav-orbit 5s linear infinite; transform-origin: 30px 30px; }
-        </style>
-      </defs>
-      <ellipse cx="30" cy="30" rx="22" ry="7" fill="none" stroke="url(#wgrad)" stroke-width="1" opacity="0.35" transform="rotate(-15,30,30)"/>
-      <text x="30" y="37" text-anchor="middle" font-family="Playfair Display, serif" font-size="26" font-weight="400" fill="url(#wgrad)">W</text>
-      <g class="nav-planet"><circle cx="30" cy="30" r="3" fill="#D4AF37" transform="rotate(-15,30,30)"/></g>
-    </svg>
-  </a>
+  <a href="index.html" class="topbar-logo">KJW</a>
   <div class="topbar-nav">
     <a href="about.html">About</a>
     <a href="portfolio.html">Portfolio</a>
@@ -301,74 +87,138 @@ body::after {
   </div>
 </nav>
 
-<!-- Content -->
-<div class="placeholder-wrap">
-  <p class="placeholder-eyebrow">Kevin James Woodworth</p>
-  <h1 class="placeholder-title">Media</h1>
-  <div class="placeholder-line"></div>
-  <p class="coming-soon">Coming Soon</p>
+<div class="page-wrap">
 
-  <!-- Flying Saucer -->
-  <div class="saucer-wrap">
-    <svg class="saucer-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="200" height="180">
-      <defs>
-        <linearGradient id="bodygrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#E1C699"/>
-          <stop offset="50%" style="stop-color:#c9a84c"/>
-          <stop offset="100%" style="stop-color:#8a6a20"/>
-        </linearGradient>
-        <linearGradient id="domegrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#d0ecff;stop-opacity:0.7"/>
-          <stop offset="100%" style="stop-color:#a0c8e8;stop-opacity:0.3"/>
-        </linearGradient>
-        <linearGradient id="beamgrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5"/>
-          <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
-        </linearGradient>
-        <radialGradient id="glowgrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.3"/>
-          <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
-        </radialGradient>
-      </defs>
-
-      <!-- tractor beam -->
-      <g class="tractor-beam">
-        <polygon points="75,112 125,112 155,160 45,160" fill="url(#beamgrad)"/>
-      </g>
-
-      <!-- glow under saucer -->
-      <ellipse cx="100" cy="115" rx="55" ry="12" fill="url(#glowgrad)"/>
-
-      <!-- saucer body -->
-      <ellipse cx="100" cy="105" rx="72" ry="18" fill="url(#bodygrad)"/>
-      <ellipse cx="100" cy="102" rx="72" ry="14" fill="url(#bodygrad)"/>
-
-      <!-- rim detail -->
-      <ellipse cx="100" cy="105" rx="72" ry="18" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
-      <ellipse cx="100" cy="102" rx="60" ry="10" fill="none" stroke="#E1C699" stroke-width="0.5" opacity="0.4"/>
-
-      <!-- spinning ring detail -->
-      <g class="saucer-dome-ring">
-        <ellipse cx="100" cy="98" rx="40" ry="6" fill="none" stroke="#FFD700" stroke-width="1" stroke-dasharray="4 6" opacity="0.5"/>
-      </g>
-
-      <!-- lights along rim -->
-      <circle cx="48" cy="105" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0s" repeatCount="indefinite"/></circle>
-      <circle cx="68" cy="110" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.2s" repeatCount="indefinite"/></circle>
-      <circle cx="88" cy="113" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.4s" repeatCount="indefinite"/></circle>
-      <circle cx="112" cy="113" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.6s" repeatCount="indefinite"/></circle>
-      <circle cx="132" cy="110" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="0.8s" repeatCount="indefinite"/></circle>
-      <circle cx="152" cy="105" r="3" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" begin="1.0s" repeatCount="indefinite"/></circle>
-
-      <!-- dome -->
-      <ellipse cx="100" cy="98" rx="36" ry="10" fill="url(#bodygrad)"/>
-      <path d="M 64 98 Q 64 55 100 55 Q 136 55 136 98" fill="url(#domegrad)" stroke="#E1C699" stroke-width="0.8" opacity="0.8"/>
-      <!-- dome shine -->
-      <path d="M 72 88 Q 75 68 90 62" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-    </svg>
+  <div class="page-header">
+    <p class="page-header-eyebrow">Kevin James Woodworth</p>
+    <h1>Media</h1>
+    <div class="page-header-line"></div>
   </div>
 
-  <a href="index.html" class="back-link">← Back to Home</a>
+  <!-- Section 01: KW00Media -->
+  <div class="media-section">
+    <p class="section-eyebrow">Recreational Digital Film Production</p>
+    <h2 class="section-title">KW<span style="font-family:'Raleway',sans-serif;font-size:36px;font-weight:100;letter-spacing:-1px;vertical-align:-3px;line-height:1;display:inline-block;transform:scaleX(0.55);margin-left:-6px;">00</span>Media</h2>
+    <p class="section-subtitle">Personal YouTube Channel</p>
+    <p class="section-desc">My personal YouTube channel designed to showcase my own digital creations, inspired by my personal interests, passions, and pastimes — a creative outlet where ideas flow and flourish into meaningful content for all audiences.</p>
+
+    <div class="video-grid">
+
+      <div class="video-card">
+        <div class="video-card-inner">
+          <div class="video-thumb">
+            <iframe src="https://www.youtube.com/embed/W4rzLMO5HDA" title="Drake and Future" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <p class="video-tag">Video Essay · 2025</p>
+            <h3 class="video-title">Where It All Went Wrong Between Drake and Future</h3>
+            <div class="quote-box">
+              <p class="quote-text">Once viewed as the most dynamic duo in hip hop, Drake and Future went from platinum-selling collab albums and #1 Billboard hits to a long, distasteful cold war — one of the most overlooked fallouts of the great war of 2024.</p>
+            </div>
+            <p class="video-desc">A full-length video essay deep-diving into the fallout between two of modern music's greatest superstars, created using recorded narration layered over images and video with research-based sourcing.</p>
+            <p class="video-meta">181 views and climbing · Positive audience reception</p>
+            <div class="video-links">
+              <a href="https://www.youtube.com/watch?v=W4rzLMO5HDA" target="_blank" class="video-link">Watch on YouTube ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-card-inner">
+          <div class="video-thumb">
+            <iframe src="https://www.youtube.com/embed/zQ_FB3jivFs" title="DJ Lotta Boyzee" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <p class="video-tag">Promotional Video · 2024</p>
+            <h3 class="video-title">DJ Lotta & Boyzee Live @ Locals — Widescreen Edition</h3>
+            <p class="video-desc">Promotional video produced and edited to support local DJs' visibility in the entertainment and nightlife space. Filmed and edited in January 2024.</p>
+            <p class="video-meta">35 views · Sep 1, 2024 · Filmed & edited by @Shotsbydaedric, @Hookmanfishing, @KevinWoodworth</p>
+            <div class="video-links">
+              <a href="https://www.youtube.com/watch?v=zQ_FB3jivFs&t=1s" target="_blank" class="video-link">Watch on YouTube ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-card-inner">
+          <div class="video-thumb">
+            <iframe src="https://www.youtube.com/embed/epDNSpikgqo" title="East Coast Icons" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <p class="video-tag">Promotional Video · 2021</p>
+            <h3 class="video-title">East Coast Icons — Promotional Video Shoot</h3>
+            <p class="video-desc">During the spring of 2021, I produced a high-quality promotional video for a close friend's local car club and community, East Coast Icons. Available in a short-form social edit and a full-length version.</p>
+            <div class="video-links">
+              <a href="https://www.youtube.com/watch?v=epDNSpikgqo" target="_blank" class="video-link">Short Version ↗</a>
+              <a href="https://www.youtube.com/watch?v=zurnLBO0qXM" target="_blank" class="video-link">Full Version ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Section 02: Kean DVP -->
+  <div class="media-section">
+    <p class="section-eyebrow">Academic · 2022</p>
+    <h2 class="section-title">Digital Video Production</h2>
+    <p class="section-subtitle">Kean University · Communications Media Journalism</p>
+    <p class="section-desc">A collection of video projects produced during my Digital Video Production course at Kean University in 2022 — spanning narrative film, public service announcements, news packaging, event coverage, and a final capstone project.</p>
+
+    <div class="kean-video-grid">
+
+      <div class="kean-video-card">
+        <div class="kean-video-embed">
+          <iframe src="https://www.youtube.com/embed/3bEXs67kMeo" title="Graduation Dedication" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="kean-video-info">
+          <p class="kean-video-title">"Graduation Dedication" — Final Project</p>
+          <p class="kean-video-desc">Capstone final project for the Digital Video Production course.</p>
+          <a href="https://www.youtube.com/watch?v=3bEXs67kMeo" target="_blank" class="kean-video-link">Watch on YouTube ↗</a>
+        </div>
+      </div>
+
+      <div class="kean-video-card">
+        <div class="kean-video-embed">
+          <iframe src="https://www.youtube.com/embed/8p_-XpJXCuc" title="NJ League of Municipalities" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="kean-video-info">
+          <p class="kean-video-title">NJ League of Municipalities — Promotional Highlight Edit</p>
+          <p class="kean-video-desc">Event highlight reel edited from convention coverage filmed in Atlantic City.</p>
+          <a href="https://www.youtube.com/watch?v=8p_-XpJXCuc" target="_blank" class="kean-video-link">Watch on YouTube ↗</a>
+        </div>
+      </div>
+
+      <div class="kean-video-card">
+        <div class="kean-video-embed">
+          <iframe src="https://www.youtube.com/embed/tyVii0ggqzk" title="News Package" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="kean-video-info">
+          <p class="kean-video-title">News Package</p>
+          <p class="kean-video-desc">Broadcast-style news segment produced as a course project.</p>
+          <a href="https://www.youtube.com/watch?v=tyVii0ggqzk" target="_blank" class="kean-video-link">Watch on YouTube ↗</a>
+        </div>
+      </div>
+
+      <div class="kean-video-card">
+        <div class="kean-video-embed">
+          <iframe src="https://www.youtube.com/embed/4fhnrFdjMRw" title="PSA Cats" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="kean-video-info">
+          <p class="kean-video-title">PSA: Checking Cars for Cats</p>
+          <p class="kean-video-desc">Public service announcement produced and directed as a course project.</p>
+          <a href="https://www.youtube.com/watch?v=4fhnrFdjMRw" target="_blank" class="kean-video-link">Watch on YouTube ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script>
